@@ -68,4 +68,27 @@ export class Book {
     }
     this.availableCopies = copies;
   }
+
+  public update(
+    data: Partial<{
+      isbn: string;
+      title: string;
+      author: string;
+      publicationYear: number;
+      category: string;
+      availableCopies: number;
+      totalCopies: number;
+    }>,
+  ): Book {
+    return new Book(
+      this.id,
+      data?.isbn ? ISBN.create(data?.isbn) : this.isbn,
+      data.title ?? this.title,
+      data.author ?? this.author,
+      data.publicationYear ?? this.publicationYear,
+      data.category ?? this.category,
+      data.availableCopies ?? this.availableCopies,
+      data.totalCopies ?? this.totalCopies,
+    );
+  }
 }

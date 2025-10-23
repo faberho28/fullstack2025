@@ -45,4 +45,17 @@ export class User {
   public isAdmin(): boolean {
     return this.type === UserType.ADMIN;
   }
+
+  public updateUser(
+    data: Partial<{
+      name: string;
+      email: string;
+      type: string;
+    }>,
+  ): User {
+    let email = this.email;
+    if (data.email) email = Email.create(data.email);
+    const type = data.type as UserType;
+    return new User(this.id, data.name || this.name, email || this.email, type || this.type);
+  }
 }

@@ -122,4 +122,8 @@ export class Loan {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
   }
+
+  public getUserType(): UserType {
+    return this.userType;
+  }
 }

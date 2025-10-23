@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { BookRepository } from '../../infrastructure/repositories/BookRepository';
+import { Inject, Injectable } from '@nestjs/common';
+import { BookNotFoundException } from '../../domain/exceptions/books/BookNotFoundException';
+import { IBookRepository } from '../../domain/interfaces/IBookRepository';
 
 export interface BookAvailability {
   bookId: string;
@@ -11,9 +12,22 @@ export interface BookAvailability {
 
 @Injectable()
 export class CheckBookAvailabilityUseCase {
-  constructor(private readonly bookRepository: BookRepository) {}
+  constructor(
+    @Inject('IBookRepository')
+    private readonly bookRepository: IBookRepository,
+  ) {}
 
   async execute(_bookId: string): Promise<BookAvailability> {
-    throw new Error('CheckBookAvailabilityUseCase not implemented');
+    const book = await this.bookRepository.findById(_bookId);
+    if (!book) {
+      throw new BookNotFoundException();
+    }
+    return {
+      bookId: book.id,
+      title: book.title,
+      availableCopies: book.getAvailableCopies(),
+      totalCopies: book.totalCopies,
+      isAvailable: book.hasAvailableCopies(),
+    };
   }
 }

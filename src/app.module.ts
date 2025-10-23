@@ -4,13 +4,8 @@ import { DatabaseModule } from './infrastructure/database/database.module';
 import { HealthController } from './presentation/controllers/health.controller';
 import { LoansController } from './presentation/controllers/loans.controller';
 import { BooksController } from './presentation/controllers/books.controller';
-import { CreateLoanUseCase } from './application/use-cases/CreateLoanUseCase';
-import { ReturnBookUseCase } from './application/use-cases/ReturnBookUseCase';
-import { GetUserLoansUseCase } from './application/use-cases/GetUserLoansUseCase';
-import { CheckBookAvailabilityUseCase } from './application/use-cases/CheckBookAvailabilityUseCase';
-import { BookRepository } from './infrastructure/repositories/BookRepository';
-import { UserRepository } from './infrastructure/repositories/UserRepository';
-import { LoanRepository } from './infrastructure/repositories/LoanRepository';
+import { ApplicationModule } from './application/application.module';
+import { UsersController } from './presentation/controllers/users.controller';
 
 @Module({
   imports: [
@@ -18,16 +13,8 @@ import { LoanRepository } from './infrastructure/repositories/LoanRepository';
       isGlobal: true,
     }),
     DatabaseModule,
+    ApplicationModule,
   ],
-  controllers: [HealthController, LoansController, BooksController],
-  providers: [
-    CreateLoanUseCase,
-    ReturnBookUseCase,
-    GetUserLoansUseCase,
-    CheckBookAvailabilityUseCase,
-    BookRepository,
-    UserRepository,
-    LoanRepository,
-  ],
+  controllers: [HealthController, LoansController, BooksController, UsersController],
 })
 export class AppModule {}

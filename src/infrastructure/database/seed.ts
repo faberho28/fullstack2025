@@ -4,7 +4,7 @@ import { BookEntity } from './entities/BookEntity';
 import { UserEntity } from './entities/UserEntity';
 
 // This seed script populates the database with sample data
-async function seed(): Promise<void> {
+export async function seed(): Promise<void> {
   const dataSource = new DataSource({
     type: 'postgres',
     host: process.env.DB_HOST || 'localhost',

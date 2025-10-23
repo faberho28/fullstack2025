@@ -17,7 +17,7 @@ export class LoanEntity {
   @Column()
   expectedReturnDate!: Date;
 
-  @Column({ nullable: true })
+  @Column({ type: 'timestamptz', nullable: true })
   returnDate!: Date | null;
 
   @Column()
