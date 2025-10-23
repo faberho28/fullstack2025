@@ -189,4 +189,63 @@ describe('UsersController', () => {
       await expect(controller.deleteUserById('non-existent')).rejects.toThrow(HttpException);
     });
   });
+
+  describe('UsersController - throws', () => {
+    const genericError = new Error('Something went wrong');
+    const createUserDto: CreateUserDto = {
+      name: 'John Doe',
+      email: 'john@example.com',
+      type: UserType.STUDENT,
+    };
+    const updateUserDto: UpdateUserDto = {
+      name: 'Jane Doe',
+      email: 'jane@example.com',
+      type: UserType.TEACHER,
+    };
+
+    it('getUserById - throws generic error', async () => {
+      (mockGetUserByIdUseCase.execute as jest.Mock).mockRejectedValue(genericError);
+
+      await expect(controller.getUserById('user-id')).rejects.toThrow(HttpException);
+      await expect(controller.getUserById('user-id')).rejects.toMatchObject({
+        response: { success: false, responseCode: 1010, data: {} },
+      });
+    });
+
+    it('getByEmail - throws generic error', async () => {
+      (mockGetUserByEmailUseCase.execute as jest.Mock).mockRejectedValue(genericError);
+
+      await expect(controller.getByEmail('john@example.com')).rejects.toThrow(HttpException);
+      await expect(controller.getByEmail('john@example.com')).rejects.toMatchObject({
+        response: { success: false, responseCode: 1010, data: {} },
+      });
+    });
+
+    it('createUser - throws generic error', async () => {
+      (mockCreateUserUseCase.execute as jest.Mock).mockRejectedValue(genericError);
+
+      await expect(controller.createUser(createUserDto)).rejects.toThrow(HttpException);
+      await expect(controller.createUser(createUserDto)).rejects.toMatchObject({
+        response: { success: false, responseCode: 1010, data: {} },
+      });
+    });
+
+    it('updateUser - throws generic error', async () => {
+      (mockUpdateUserUseCase.execute as jest.Mock).mockRejectedValue(genericError);
+
+      await expect(controller.updateUser('user-id', updateUserDto)).rejects.toThrow(HttpException);
+      await expect(controller.updateUser('user-id', updateUserDto)).rejects.toMatchObject({
+        response: { success: false, responseCode: 1010, data: {} },
+      });
+    });
+
+    it('deleteUserById - throws generic error', async () => {
+      (mockDeleteUserByIdUseCase.execute as jest.Mock).mockRejectedValue(genericError);
+
+      await expect(controller.deleteUserById('user-id')).rejects.toThrow(HttpException);
+      await expect(controller.deleteUserById('user-id')).rejects.toMatchObject({
+        response: { success: false, responseCode: 1010, data: {} },
+      });
+    });
+  });
 });
