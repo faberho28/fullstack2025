@@ -203,6 +203,7 @@ describe('BooksController', () => {
         success: true,
         responseCode: 1001,
         responseMessage: 'Book has been deleted correctly',
+        data: null,
       });
     });
 

@@ -21,6 +21,8 @@ import { UserNotFoundException } from '../../domain/exceptions/users/UserNotFoun
 import { CreateUserDto } from '../../application/dtos/CreateUserDto';
 import { UserExistException } from '../../domain/exceptions/users/UserExistException';
 import { UpdateUserDto } from '../../application/dtos/UpdateUserDto';
+import { User } from '../../domain/entities/User.entity';
+import { ApiResponseType } from '../types/ApiResponse';
 
 @Controller('users')
 export class UsersController {
@@ -87,7 +89,7 @@ export class UsersController {
       },
     },
   })
-  async getAllUsers() {
+  async getAllUsers(): Promise<ApiResponseType<User[]>> {
     try {
       const response = await this.getAllUsersUseCase.execute();
       return {
@@ -158,7 +160,7 @@ export class UsersController {
       },
     },
   })
-  async getUserById(@Param('id') _userId: string) {
+  async getUserById(@Param('id') _userId: string): Promise<ApiResponseType<User>> {
     try {
       const response = await this.getUserByIdUseCase.execute(_userId);
       return {
@@ -240,7 +242,7 @@ export class UsersController {
       },
     },
   })
-  async getByEmail(@Param('email') _email: string) {
+  async getByEmail(@Param('email') _email: string): Promise<ApiResponseType<User>> {
     try {
       const response = await this.getUserByEmailUseCase.execute(_email);
       return {
@@ -335,7 +337,7 @@ export class UsersController {
       },
     },
   })
-  async createUser(@Body() createUserDto: CreateUserDto) {
+  async createUser(@Body() createUserDto: CreateUserDto): Promise<ApiResponseType<User>> {
     try {
       const response = await this.createUserUseCase.execute(createUserDto);
       return {
@@ -430,7 +432,10 @@ export class UsersController {
       },
     },
   })
-  async updateUser(@Param('id') _id: string, @Body() updateUserDto: UpdateUserDto) {
+  async updateUser(
+    @Param('id') _id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<ApiResponseType<User>> {
     try {
       const response = await this.updateUserUseCase.execute(_id, updateUserDto);
       return {
@@ -504,13 +509,14 @@ export class UsersController {
       },
     },
   })
-  async deleteUserById(@Param('id') _id: string) {
+  async deleteUserById(@Param('id') _id: string): Promise<ApiResponseType<User | null>> {
     try {
       await this.deleteUserByIdUseCase.execute(_id);
       return {
         success: true,
         responseCode: 1001,
         responseMessage: 'User has been deleted correctly',
+        data: null,
       };
     } catch (error) {
       if (error instanceof UserNotFoundException) {

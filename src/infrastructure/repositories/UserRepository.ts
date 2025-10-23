@@ -15,19 +15,19 @@ export class UserRepository implements IUserRepository {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  private toDomain(entity: UserEntity): User {
+  private toDomain = (entity: UserEntity): User => {
     const email = Email.create(entity.email);
     return new User(entity.id, entity.name, email, entity.type as UserType);
-  }
+  };
 
-  private toEntity(domain: User): UserEntity {
+  private toEntity = (domain: User): UserEntity => {
     const entity = new UserEntity();
     entity.id = domain.id;
     entity.email = domain.email.getValue();
     entity.name = domain.name;
     entity.type = domain.type;
     return entity;
-  }
+  };
 
   async findById(_id: string): Promise<User> {
     const user = await this.userRepository.findOneBy({ id: _id });

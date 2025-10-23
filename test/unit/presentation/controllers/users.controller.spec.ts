@@ -178,6 +178,7 @@ describe('UsersController', () => {
         success: true,
         responseCode: 1001,
         responseMessage: 'User has been deleted correctly',
+        data: null,
       });
     });
 

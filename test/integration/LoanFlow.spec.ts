@@ -66,7 +66,12 @@ describe('Loan Flow Integration', () => {
       5,
     );
 
-    const user = new User('user-id', 'John Doe', Email.create('john@example.com'), UserType.STUDENT);
+    const user = new User(
+      'user-id',
+      'John Doe',
+      Email.create('john@example.com'),
+      UserType.STUDENT,
+    );
 
     // Setup mocks for loan creation
     bookRepository.findById.mockResolvedValue(book);
@@ -112,7 +117,12 @@ describe('Loan Flow Integration', () => {
       5,
     );
 
-    const user = new User('user-id', 'John Doe', Email.create('john@example.com'), UserType.STUDENT);
+    const user = new User(
+      'user-id',
+      'John Doe',
+      Email.create('john@example.com'),
+      UserType.STUDENT,
+    );
 
     const existingLoans = [
       Loan.createNew('loan-1', 'book-1', 'user-id', UserType.STUDENT),
@@ -145,7 +155,12 @@ describe('Loan Flow Integration', () => {
       5,
     );
 
-    const user = new User('user-id', 'John Doe', Email.create('john@example.com'), UserType.STUDENT);
+    const user = new User(
+      'user-id',
+      'John Doe',
+      Email.create('john@example.com'),
+      UserType.STUDENT,
+    );
 
     bookRepository.findById.mockResolvedValue(book);
     userRepository.findById.mockResolvedValue(user);
@@ -202,7 +217,12 @@ describe('Loan Flow Integration', () => {
       5,
     );
 
-    const user = new User('user-id', 'John Doe', Email.create('john@example.com'), UserType.STUDENT);
+    const user = new User(
+      'user-id',
+      'John Doe',
+      Email.create('john@example.com'),
+      UserType.STUDENT,
+    );
 
     const overdueLoan = Loan.createNew(
       'overdue-loan',
@@ -249,8 +269,18 @@ describe('Loan Flow Integration', () => {
       5,
     );
 
-    const user1 = new User('user-1', 'John Doe', Email.create('john@example.com'), UserType.STUDENT);
-    const user2 = new User('user-2', 'Jane Smith', Email.create('jane@example.com'), UserType.STUDENT);
+    const user1 = new User(
+      'user-1',
+      'John Doe',
+      Email.create('john@example.com'),
+      UserType.STUDENT,
+    );
+    const user2 = new User(
+      'user-2',
+      'Jane Smith',
+      Email.create('jane@example.com'),
+      UserType.STUDENT,
+    );
 
     bookRepository.findById.mockResolvedValue(book);
     loanRepository.findActiveByUserId.mockResolvedValue([]);

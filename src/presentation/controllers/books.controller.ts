@@ -10,7 +10,10 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { CheckBookAvailabilityUseCase } from '../../application/use-cases/CheckBookAvailabilityUseCase';
+import {
+  BookAvailability,
+  CheckBookAvailabilityUseCase,
+} from '../../application/use-cases/CheckBookAvailabilityUseCase';
 import { GetAllBooksUseCase } from '../../application/use-cases/books/GetAllBooksUseCase';
 import { UpdateBookByIdUseCase } from '../../application/use-cases/books/UpdateBookByIdUseCase';
 import { UpdateBookDto } from '../../application/dtos/UpdateBookDto';
@@ -21,7 +24,8 @@ import { FindBookByISBNUseCase } from '../../application/use-cases/books/FindBoo
 import { DeleteBookByIdUseCase } from '../../application/use-cases/books/DeleteBookByIdUseCase';
 import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { BookNotFoundException } from '../../domain/exceptions/books/BookNotFoundException';
-
+import { ApiResponseType } from '../types/ApiResponse';
+import { Book } from '../../domain/entities/Book.entity';
 @Controller('books')
 export class BooksController {
   constructor(
@@ -74,7 +78,7 @@ export class BooksController {
       },
     },
   })
-  async getAllBooks() {
+  async getAllBooks(): Promise<ApiResponseType<Book[]>> {
     try {
       const response = await this.getAllBooksUseCase.execute();
       return {
@@ -147,7 +151,7 @@ export class BooksController {
       },
     },
   })
-  async checkAvailability(@Param('id') id: string) {
+  async checkAvailability(@Param('id') id: string): Promise<ApiResponseType<BookAvailability>> {
     try {
       const response = await this.checkBookAvailabilityUseCase.execute(id);
       return {
@@ -223,7 +227,7 @@ export class BooksController {
       },
     },
   })
-  async getBookById(@Param('id') id: string) {
+  async getBookById(@Param('id') id: string): Promise<ApiResponseType<Book>> {
     try {
       const response = await this.findBookByIdUseCase.execute(id);
       return {
@@ -299,7 +303,7 @@ export class BooksController {
       },
     },
   })
-  async getBookByIsbn(@Param('isbn') isbn: string) {
+  async getBookByIsbn(@Param('isbn') isbn: string): Promise<ApiResponseType<Book>> {
     try {
       const response = await this.findBookByIsbnUseCase.execute(isbn);
       return {
@@ -389,7 +393,7 @@ export class BooksController {
       },
     },
   })
-  async createBook(@Body() book: CreateBookDto) {
+  async createBook(@Body() book: CreateBookDto): Promise<ApiResponseType<Book>> {
     try {
       const response = await this.createBookUseCase.execute(book);
       return {
@@ -470,7 +474,10 @@ export class BooksController {
       },
     },
   })
-  async updateBookById(@Param('id') id: string, @Body() book: UpdateBookDto) {
+  async updateBookById(
+    @Param('id') id: string,
+    @Body() book: UpdateBookDto,
+  ): Promise<ApiResponseType<Book>> {
     try {
       const response = await this.updateBookByIDUseCase.execute(id, book);
       return {
@@ -536,13 +543,14 @@ export class BooksController {
       },
     },
   })
-  async deleteBookById(@Param('id') id: string) {
+  async deleteBookById(@Param('id') id: string): Promise<ApiResponseType<Book | null>> {
     try {
       await this.deleteBookByIdUseCase.execute(id);
       return {
         success: true,
         responseCode: 1001,
         responseMessage: 'Book has been deleted correctly',
+        data: null,
       };
     } catch (error) {
       if (error instanceof BookNotFoundException) {

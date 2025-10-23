@@ -35,7 +35,7 @@ describe('CheckBookAvailabilityUseCase', () => {
     );
     bookRepository.findById.mockResolvedValue(book);
 
-    const bookId: string = 'book-id';
+    const bookId = 'book-id';
 
     const result = await checkBookAvailabilityUseCase.execute(bookId);
     expect(result).toBeDefined();
@@ -46,7 +46,7 @@ describe('CheckBookAvailabilityUseCase', () => {
   it("Should throw if book doesn't exist", async () => {
     bookRepository.findById.mockResolvedValue(null);
 
-    const bookId: string = 'book-id';
+    const bookId = 'book-id';
 
     const result = checkBookAvailabilityUseCase.execute(bookId);
 

@@ -62,7 +62,12 @@ describe('CreateLoanUseCase', () => {
       5,
     );
 
-    const user = new User('user-id', 'John Doe', Email.create('john@example.com'), UserType.STUDENT);
+    const user = new User(
+      'user-id',
+      'John Doe',
+      Email.create('john@example.com'),
+      UserType.STUDENT,
+    );
 
     const dto: CreateLoanDto = {
       bookId: 'book-id',
@@ -97,7 +102,12 @@ describe('CreateLoanUseCase', () => {
       5,
     );
 
-    const user = new User('user-id', 'John Doe', Email.create('john@example.com'), UserType.STUDENT);
+    const user = new User(
+      'user-id',
+      'John Doe',
+      Email.create('john@example.com'),
+      UserType.STUDENT,
+    );
 
     const existingLoans = [
       Loan.createNew('loan-1', 'book-1', 'user-id', UserType.STUDENT),
@@ -130,7 +140,12 @@ describe('CreateLoanUseCase', () => {
       5,
     );
 
-    const user = new User('user-id', 'John Doe', Email.create('john@example.com'), UserType.STUDENT);
+    const user = new User(
+      'user-id',
+      'John Doe',
+      Email.create('john@example.com'),
+      UserType.STUDENT,
+    );
 
     const dto: CreateLoanDto = {
       bookId: 'book-id',
@@ -157,9 +172,20 @@ describe('CreateLoanUseCase', () => {
       5,
     );
 
-    const user = new User('user-id', 'John Doe', Email.create('john@example.com'), UserType.STUDENT);
+    const user = new User(
+      'user-id',
+      'John Doe',
+      Email.create('john@example.com'),
+      UserType.STUDENT,
+    );
 
-    const overdueLoan = Loan.createNew('overdue-loan', 'book-1', 'user-id', UserType.STUDENT, new Date('2024-01-01'));
+    const overdueLoan = Loan.createNew(
+      'overdue-loan',
+      'book-1',
+      'user-id',
+      UserType.STUDENT,
+      new Date('2024-01-01'),
+    );
 
     const dto: CreateLoanDto = {
       bookId: 'book-id',
@@ -186,7 +212,12 @@ describe('CreateLoanUseCase', () => {
       5,
     );
 
-    const user = new User('user-id', 'John Doe', Email.create('john@example.com'), UserType.STUDENT);
+    const user = new User(
+      'user-id',
+      'John Doe',
+      Email.create('john@example.com'),
+      UserType.STUDENT,
+    );
 
     const dto: CreateLoanDto = {
       bookId: 'book-id',

@@ -14,7 +14,7 @@ export class BookRepository implements IBookRepository {
     private readonly bookRepository: Repository<BookEntity>,
   ) {}
 
-  private toDomain(entity: BookEntity): Book {
+  private toDomain = (entity: BookEntity): Book => {
     return new Book(
       entity.id,
       ISBN.create(entity.isbn),
@@ -25,9 +25,9 @@ export class BookRepository implements IBookRepository {
       entity.availableCopies,
       entity.totalCopies,
     );
-  }
+  };
 
-  private toEntity(domain: Book): BookEntity {
+  private toEntity = (domain: Book): BookEntity => {
     const entity = new BookEntity();
     entity.id = domain.id;
     entity.isbn = domain.isbn.getValue();
@@ -38,7 +38,7 @@ export class BookRepository implements IBookRepository {
     entity.availableCopies = domain.getAvailableCopies();
     entity.totalCopies = domain.totalCopies;
     return entity;
-  }
+  };
 
   async findById(_id: string): Promise<Book> {
     const bookEntity = await this.bookRepository.findOneBy({

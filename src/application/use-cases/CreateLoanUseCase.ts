@@ -46,7 +46,7 @@ export class CreateLoanUseCase {
 
     const loan = Loan.createNew(uuidv4(), bookId, userId, user.type);
 
-    await book.decreaseAvailableCopies();
+    book.decreaseAvailableCopies();
 
     await this.loanRepository.save(loan);
     await this.bookRepository.update(book);

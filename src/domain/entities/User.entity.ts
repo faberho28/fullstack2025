@@ -50,7 +50,7 @@ export class User {
     data: Partial<{
       name: string;
       email: string;
-      type: string;
+      type: UserType;
     }>,
   ): User {
     let email = this.email;

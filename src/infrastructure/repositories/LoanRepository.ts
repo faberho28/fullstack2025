@@ -15,7 +15,7 @@ export class LoanRepository implements ILoanRepository {
     private readonly loanRepository: Repository<LoanEntity>,
   ) {}
 
-  private toDomain(entity: LoanEntity): Loan {
+  private toDomain = (entity: LoanEntity): Loan => {
     return new Loan(
       entity.id,
       entity.bookId,
@@ -26,9 +26,9 @@ export class LoanRepository implements ILoanRepository {
       entity.status as LoanStatus,
       entity.userType as UserType,
     );
-  }
+  };
 
-  private toEntity(domain: Loan): LoanEntity {
+  private toEntity = (domain: Loan): LoanEntity => {
     const entity = new LoanEntity();
     entity.id = domain.id;
     entity.bookId = domain.bookId;
@@ -39,7 +39,7 @@ export class LoanRepository implements ILoanRepository {
     entity.status = domain.getStatus();
     entity.userType = domain.getUserType();
     return entity;
-  }
+  };
 
   async findById(_id: string): Promise<Loan> {
     const loan = await this.loanRepository.findOneBy({ id: _id });

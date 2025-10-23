@@ -197,6 +197,7 @@ describe('LoansController', () => {
         success: true,
         responseCode: 1001,
         responseMessage: 'Loan has been deleted correctly',
+        data: null,
       });
     });
 

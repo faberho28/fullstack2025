@@ -10,7 +10,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { CreateLoanUseCase } from '../../application/use-cases/CreateLoanUseCase';
-import { ReturnBookUseCase } from '../../application/use-cases/ReturnBookUseCase';
+import { ReturnBookResult, ReturnBookUseCase } from '../../application/use-cases/ReturnBookUseCase';
 import { GetUserLoansUseCase } from '../../application/use-cases/GetUserLoansUseCase';
 import { CreateLoanDto } from '../../application/dtos/CreateLoanDto';
 import { ReturnBookDto } from '../../application/dtos/ReturnBookDto';
@@ -23,6 +23,8 @@ import { LoanBorrowException } from '../../domain/exceptions/loans/LoanBorrowExc
 import { BookNotFoundException } from '../../domain/exceptions/books/BookNotFoundException';
 import { UserNotFoundException } from '../../domain/exceptions/users/UserNotFoundException';
 import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import { ApiResponseType } from '../types/ApiResponse';
+import { Loan } from '../../domain/entities/Loan.entity';
 
 @Controller('loans')
 export class LoansController {
@@ -76,7 +78,7 @@ export class LoansController {
       },
     },
   })
-  async getAllLoans() {
+  async getAllLoans(): Promise<ApiResponseType<Loan[]>> {
     try {
       const response = await this.getAllLoansUseCase.execute();
       return {
@@ -149,7 +151,7 @@ export class LoansController {
       },
     },
   })
-  async getLoanById(@Param('id') _id: string) {
+  async getLoanById(@Param('id') _id: string): Promise<ApiResponseType<Loan>> {
     try {
       const response = await this.getLoanByIdUseCase.execute(_id);
       return {
@@ -247,7 +249,7 @@ export class LoansController {
       },
     },
   })
-  async getLoanByBookId(@Param('bookId') _bookId: string) {
+  async getLoanByBookId(@Param('bookId') _bookId: string): Promise<ApiResponseType<Loan[]>> {
     try {
       const response = await this.getLoanByBookIdUseCase.execute(_bookId);
       return {
@@ -345,7 +347,7 @@ export class LoansController {
       },
     },
   })
-  async getUserLoans(@Param('userId') userId: string) {
+  async getUserLoans(@Param('userId') userId: string): Promise<ApiResponseType<Loan[]>> {
     try {
       const response = await this.getUserLoansUseCase.execute(userId);
       return {
@@ -453,7 +455,7 @@ export class LoansController {
       },
     },
   })
-  async createLoan(@Body() createLoanDto: CreateLoanDto) {
+  async createLoan(@Body() createLoanDto: CreateLoanDto): Promise<ApiResponseType<Loan>> {
     try {
       const response = await this.createLoanUseCase.execute(createLoanDto);
       return {
@@ -576,7 +578,9 @@ export class LoansController {
       },
     },
   })
-  async returnBook(@Body() returnBookDto: ReturnBookDto) {
+  async returnBook(
+    @Body() returnBookDto: ReturnBookDto,
+  ): Promise<ApiResponseType<ReturnBookResult>> {
     try {
       const response = await this.returnBookUseCase.execute(returnBookDto);
       return {
@@ -665,13 +669,14 @@ export class LoansController {
       },
     },
   })
-  async deleteBookById(@Param('id') _id: string) {
+  async deleteBookById(@Param('id') _id: string): Promise<ApiResponseType<Loan | null>> {
     try {
       await this.deleteLoanByIdUseCase.execute(_id);
       return {
         success: true,
         responseCode: 1001,
         responseMessage: 'Loan has been deleted correctly',
+        data: null,
       };
     } catch (error) {
       if (error instanceof LoanNotFoundException) {
