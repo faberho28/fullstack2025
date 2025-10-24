@@ -9,6 +9,7 @@ import {
   Body,
   Put,
   Delete,
+  Logger,
 } from '@nestjs/common';
 import { CreateUserUseCase } from '../../application/use-cases/users/CreateUserUseCase';
 import { DeleteUserByIdUseCase } from '../../application/use-cases/users/DeleteUserByIdUseCase';
@@ -26,6 +27,8 @@ import { ApiResponseType } from '../types/ApiResponse';
 
 @Controller('users')
 export class UsersController {
+  private readonly logger = new Logger(UsersController.name);
+
   constructor(
     private readonly createUserUseCase: CreateUserUseCase,
     private readonly deleteUserByIdUseCase: DeleteUserByIdUseCase,
@@ -99,6 +102,7 @@ export class UsersController {
         data: response,
       };
     } catch (error) {
+      this.logger.error(error);
       throw new HttpException(
         {
           success: false,

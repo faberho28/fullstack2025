@@ -1,4 +1,4 @@
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { LoanEntity } from '../../../src/infrastructure/database/entities/LoanEntity';
 import { LoanRepository } from '../../../src/infrastructure/repositories/LoanRepository';
 import { LoanStatus } from '../../../src/domain/entities/LoanStatus.enum';
@@ -119,7 +119,7 @@ describe('LoanRepository', () => {
 
   it('should update a loan', async () => {
     const loan = createDomain();
-    typeOrmRepo.update.mockResolvedValue({} as unknown as any);
+    typeOrmRepo.update.mockResolvedValue({} as UpdateResult);
 
     const result = await repo.update(loan);
     expect(result).toBe(loan);

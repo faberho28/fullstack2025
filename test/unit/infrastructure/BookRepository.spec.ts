@@ -1,4 +1,4 @@
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { BookEntity } from '../../../src/infrastructure/database/entities/BookEntity';
 import { BookRepository } from '../../../src/infrastructure/repositories/BookRepository';
 import { Book } from '../../../src/domain/entities/Book.entity';
@@ -89,7 +89,7 @@ describe('BookRepository', () => {
 
   it('should update a book', async () => {
     const book = createDomain();
-    typeOrmRepo.update.mockResolvedValue({} as unknown as any);
+    typeOrmRepo.update.mockResolvedValue({} as UpdateResult);
 
     const result = await repo.update(book);
 

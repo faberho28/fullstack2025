@@ -8,6 +8,7 @@ import {
   HttpStatus,
   HttpException,
   Delete,
+  Logger,
 } from '@nestjs/common';
 import { CreateLoanUseCase } from '../../application/use-cases/CreateLoanUseCase';
 import { ReturnBookResult, ReturnBookUseCase } from '../../application/use-cases/ReturnBookUseCase';
@@ -28,6 +29,8 @@ import { Loan } from '../../domain/entities/Loan.entity';
 
 @Controller('loans')
 export class LoansController {
+  private readonly logger = new Logger(LoansController.name);
+
   constructor(
     private readonly createLoanUseCase: CreateLoanUseCase,
     private readonly returnBookUseCase: ReturnBookUseCase,
@@ -88,6 +91,7 @@ export class LoansController {
         data: response,
       };
     } catch (error) {
+      this.logger.error(error);
       throw new HttpException(
         {
           success: false,

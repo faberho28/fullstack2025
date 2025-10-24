@@ -9,6 +9,7 @@ import {
   Param,
   Post,
   Put,
+  Logger,
 } from '@nestjs/common';
 import {
   BookAvailability,
@@ -28,6 +29,8 @@ import { ApiResponseType } from '../types/ApiResponse';
 import { Book } from '../../domain/entities/Book.entity';
 @Controller('books')
 export class BooksController {
+  private readonly logger = new Logger(BooksController.name);
+
   constructor(
     private readonly checkBookAvailabilityUseCase: CheckBookAvailabilityUseCase,
     private readonly getAllBooksUseCase: GetAllBooksUseCase,
@@ -409,6 +412,7 @@ export class BooksController {
         responseMessage: 'An error occurred while creating the book',
         data: {},
       };
+      this.logger.error(error);
       throw new HttpException(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

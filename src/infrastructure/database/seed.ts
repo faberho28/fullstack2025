@@ -2,9 +2,11 @@ import { DataSource } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { BookEntity } from './entities/BookEntity';
 import { UserEntity } from './entities/UserEntity';
+import { Logger } from '@nestjs/common';
 
 // This seed script populates the database with sample data
 export async function seed(): Promise<void> {
+  const logger = new Logger('Seed');
   const dataSource = new DataSource({
     type: 'postgres',
     host: process.env.DB_HOST || 'localhost',
@@ -80,13 +82,14 @@ export async function seed(): Promise<void> {
 
   await userRepository.save(users);
 
-  console.log('✅ Database seeded successfully!');
-  console.log(`Created ${books.length} books and ${users.length} users`);
+  logger.log('✅ Database seeded successfully!');
+  logger.log(`Created ${books.length} books and ${users.length} users`);
 
   await dataSource.destroy();
 }
 
 seed().catch((error) => {
-  console.error('Error seeding database:', error);
+  const logger = new Logger('Seed');
+  logger.error('Error seeding database:', error);
   process.exit(1);
 });

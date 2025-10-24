@@ -3,7 +3,6 @@ import { ILoanRepository } from '../../../../src/domain/interfaces/ILoanReposito
 import { Loan } from '../../../../src/domain/entities/Loan.entity';
 import { LoanStatus } from '../../../../src/domain/entities/LoanStatus.enum';
 import { UserType } from '../../../../src/domain/entities/UserType.enum';
-import { LoanNotFoundException } from '../../../../src/domain/exceptions/loans/LoanNotFoundException';
 import { LoanBorrowException } from '../../../../src/domain/exceptions/loans/LoanBorrowException';
 
 describe('GetLoanByIdUseCase', () => {

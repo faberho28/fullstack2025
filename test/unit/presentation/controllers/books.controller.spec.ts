@@ -8,7 +8,7 @@ import { FindBookByIdUseCase } from '../../../../src/application/use-cases/books
 import { FindBookByISBNUseCase } from '../../../../src/application/use-cases/books/FindBookByISBNUseCase';
 import { DeleteBookByIdUseCase } from '../../../../src/application/use-cases/books/DeleteBookByIdUseCase';
 import { BookNotFoundException } from '../../../../src/domain/exceptions/books/BookNotFoundException';
-import { HttpException } from '@nestjs/common';
+import { HttpException, Logger } from '@nestjs/common';
 import { CreateBookDto } from '../../../../src/application/dtos/CreateBookDto';
 import { UpdateBookDto } from '../../../../src/application/dtos/UpdateBookDto';
 
@@ -57,6 +57,10 @@ describe('BooksController', () => {
     }).compile();
 
     controller = module.get<BooksController>(BooksController);
+
+    jest.spyOn(Logger.prototype, 'log').mockImplementation(() => {});
+    jest.spyOn(Logger.prototype, 'error').mockImplementation(() => {});
+    jest.spyOn(Logger.prototype, 'warn').mockImplementation(() => {});
   });
 
   describe('getAllBooks', () => {

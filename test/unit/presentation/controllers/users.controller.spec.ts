@@ -8,7 +8,7 @@ import { GetUserByIdUseCase } from '../../../../src/application/use-cases/users/
 import { UpdateUserUseCase } from '../../../../src/application/use-cases/users/UpdateUserUseCase';
 import { UserNotFoundException } from '../../../../src/domain/exceptions/users/UserNotFoundException';
 import { UserExistException } from '../../../../src/domain/exceptions/users/UserExistException';
-import { HttpException } from '@nestjs/common';
+import { HttpException, Logger } from '@nestjs/common';
 import { CreateUserDto } from '../../../../src/application/dtos/CreateUserDto';
 import { UpdateUserDto } from '../../../../src/application/dtos/UpdateUserDto';
 import { UserType } from '../../../../src/domain/entities/UserType.enum';
@@ -50,6 +50,10 @@ describe('UsersController', () => {
     }).compile();
 
     controller = module.get<UsersController>(UsersController);
+
+    jest.spyOn(Logger.prototype, 'log').mockImplementation(() => {});
+    jest.spyOn(Logger.prototype, 'error').mockImplementation(() => {});
+    jest.spyOn(Logger.prototype, 'warn').mockImplementation(() => {});
   });
 
   describe('getAllUsers', () => {

@@ -1,9 +1,6 @@
 import { DeleteUserByIdUseCase } from '../../../../src/application/use-cases/users/DeleteUserByIdUseCase';
-import { User } from '../../../../src/domain/entities/User.entity';
-import { UserType } from '../../../../src/domain/entities/UserType.enum';
 import { UserNotFoundException } from '../../../../src/domain/exceptions/users/UserNotFoundException';
 import { IUserRepository } from '../../../../src/domain/interfaces/IUserRepository';
-import { Email } from '../../../../src/domain/value-objects/Email.vo';
 
 describe('DeleteUserByIdUseCase', () => {
   let deleteUserByIdUseCase: DeleteUserByIdUseCase;

@@ -10,8 +10,7 @@ import { DeleteLoanByIdUseCase } from '../../../../src/application/use-cases/loa
 import { LoanNotFoundException } from '../../../../src/domain/exceptions/loans/LoanNotFoundException';
 import { LoanBorrowException } from '../../../../src/domain/exceptions/loans/LoanBorrowException';
 import { BookNotFoundException } from '../../../../src/domain/exceptions/books/BookNotFoundException';
-import { UserNotFoundException } from '../../../../src/domain/exceptions/users/UserNotFoundException';
-import { HttpException } from '@nestjs/common';
+import { HttpException, Logger } from '@nestjs/common';
 import { CreateLoanDto } from '../../../../src/application/dtos/CreateLoanDto';
 import { ReturnBookDto } from '../../../../src/application/dtos/ReturnBookDto';
 
@@ -59,6 +58,10 @@ describe('LoansController', () => {
     }).compile();
 
     controller = module.get<LoansController>(LoansController);
+
+    jest.spyOn(Logger.prototype, 'log').mockImplementation(() => {});
+    jest.spyOn(Logger.prototype, 'error').mockImplementation(() => {});
+    jest.spyOn(Logger.prototype, 'warn').mockImplementation(() => {});
   });
 
   describe('getAllLoans', () => {
